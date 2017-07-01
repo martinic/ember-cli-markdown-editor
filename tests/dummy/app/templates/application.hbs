@@ -1,5 +1,11 @@
-{{!-- The following component displays Ember's default welcome message. --}}
-{{welcome-page}}
-{{!-- Feel free to remove this! --}}
+<p>{{markdown-editor
+rows='8'
+placeholder="Post content"
+value=myValue
+}}</p>
+
+<hr>
+
+<p>{{format-markdown myValue}}</p>
 
 {{outlet}}

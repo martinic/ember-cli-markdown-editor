@@ -1,0 +1,71 @@
+<div class="markdown-editor-toolbar">
+  {{#each toolbarBtns as |btnGroup|}}
+    <div class="btn-group">
+      {{#each btnGroup as |btn|}}
+        <button type="button" class="btn btn-default" {{action 'applyStyle' btn.regex btn.requireSelection btn.prompt btn.tooltip btn.enter}} title="{{btn.tooltip}} " tabindex="-1"><i class="fa {{btn.iconClass}}"></i></button>
+      {{/each}}
+    </div>
+  {{/each}}
+
+  <div class="btn-group">
+    <button type="button" class="btn btn-default" {{action 'undo'}} disabled={{noUndo}} tabindex="-1"><i class="fa fa-undo"></i></button>
+  </div>
+
+  <a class="btn btn-link" title="{{lang.help.title}}" href="{{lang.help.href}}" target="_blank" tabindex="-1"><i class="fa fa-question-circle"></i></a>
+</div>
+
+<div class="markdown-editor-editor">
+  {{textarea
+    id=textareaId
+    class='markdown-editor-textarea form-control'
+    value=value
+    autofocus=autofocus
+    cols=cols
+    dirname=dirname
+    disabled=disabled
+    form=form
+    maxlength=maxlength
+    name=name
+    placeholder=placeholder
+    readonly=readonly
+    required=required
+    rows=rows
+    wrap=wrap
+  }}
+</div>
+
+{{#if modal}}
+<style>.modal .modal-dialog { width: 500px; }</style>
+<div class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" style="display:block">
+ <table height="80%" width="100%"><tr><td valign="middle">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      {{#if dialog}}
+      <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal" aria-label="Close" {{action 'cancel'}}>&times;</button>
+         <h4 class="modal-title" id="gridSystemModalLabel">{{tooltip}}</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{lang.modal.selectionText}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" {{action 'cancel'}}><span class='fa fa-check'></span> &nbsp;{{lang.modal.confirm}}</button>
+      </div>
+      {{else}}
+      <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal" aria-label="Close" {{action 'cancel'}}>&times;</button>
+         <h4 class="modal-title" id="gridSystemModalLabel">{{tooltip}}</h4>
+      </div>
+      <div class="modal-body">
+        <p>{{input type="text" value=result class="form-control" placeholder=promptText}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" {{action 'confirm' result}}><span class='fa fa-check'></span> &nbsp;{{lang.modal.confirm}}</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" {{action 'cancel'}}><span class='fa fa-times'></span> &nbsp;{{lang.modal.cancel}}</button>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+ </td></tr></table>
+</div>
+{{/if}}
