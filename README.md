@@ -1,6 +1,6 @@
 # ember-cli-markdown-editor
 
-markdown-editor is markdown enhanced textarea with native browser spellchecking
+markdown-editor is a markdown enhanced textarea with native browser spellchecking
 
 Features:
 - Bootstrap Styling by default
