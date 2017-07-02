@@ -79,6 +79,7 @@ This project was originally based on the [ember-bootstrap-markdown](https://gith
 And of course thanks to all our wonderful contributors, [here](https://github.com/martinic/ember-cli-markdown-editor/graphs/contributors).
 
 ## Changelog
-
+* **0.1.0-beta.2**
+  - Add some readme
 * **0.1.0-beta.1**
   - First version
