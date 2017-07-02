@@ -1,14 +1,67 @@
 # ember-cli-markdown-editor
 
-This README outlines the details of collaborating on this Ember addon.
+markdown-editor is markdown enhanced textarea with native browser spellchecking
+
+Features:
+- Bootstrap Styling by default
+- Font Awesome Icons
+- Supports all textarea Attributes
+- Does not depend on a specific markdown addon to generate html formatted markup
+- Native browser spellchecking
+- Disable Buttons via an optional btns array
+- Undo Button
+
+## Requirements
+
+- ember-cli 2.4.2 or higher
+- Bootstrap CSS
+- Font Awesome CSS an Icons
 
 ## Installation
 
-* `git clone <repository-url>` this repository
-* `cd ember-cli-markdown-editor`
-* `npm install`
+* `ember install ember-cli-bootstrap-css` Or your favorite Bootstrap addon
+* `ember install ember-font-awesome` Or your favorite Font Awesome addon
+* `ember install ember-cli-markdown-editor` This addon
 
-## Running
+## Usage
+
+Add the markdown-editor to your templates like you would normaly do with a textarea.
+
+Minimal
+```
+{{markdown-editor value=myValue}}
+```
+
+Common
+```
+{{markdown-editor
+rows='8'
+placeholder="Post content"
+value=myValue
+}}
+```
+
+All Buttons
+```
+{{markdown-editor
+rows='8'
+placeholder="Post content"
+btns='heading,bold,italic,quote,link,image,table,hr,list-ol,list-ul'
+value=myValue
+}}
+```
+
+Some Buttons
+```
+{{markdown-editor
+rows='8'
+placeholder="Post content"
+btns='bold,italic,list-ol,list-ul'
+value=myValue
+}}
+```
+
+## Running the Dummy App
 
 * `ember serve`
 * Visit your app at [http://localhost:4200](http://localhost:4200).
@@ -19,8 +72,13 @@ This README outlines the details of collaborating on this Ember addon.
 * `ember test`
 * `ember test --server`
 
-## Building
+## Credits
 
-* `ember build`
+This project was originally based on the [ember-bootstrap-markdown](https://github.com/ChrisHonniball/ember-bootstrap-markdown) by [@ChrisHonniball](https://github.com/ChrisHonniball), and I really like his code.
 
-For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
+And of course thanks to all our wonderful contributors, [here](https://github.com/martinic/ember-cli-markdown-editor/graphs/contributors).
+
+## Changelog
+
+* **0.1.0-beta.1**
+  - First version
