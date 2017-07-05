@@ -1,0 +1,33 @@
+markdown-editor:
+  undo:
+    title: 'Undo'
+  help:
+    title: 'What is Markdown?'
+    href: 'https://guides.github.com/features/mastering-markdown/'
+  modal:
+    selectionText: 'Please make a text selection'
+    confirm: 'Confirm'
+    cancel: 'Cancel'
+  formats:
+    heading:
+      tooltip: 'Add Heading'
+    bold:
+      tooltip: 'Make Selection Bold'
+    italic:
+      tooltip: 'Make Selection Italic'
+    quote:
+      tooltip: 'Add Quoted Text'
+    link:
+      tooltip: 'Make Selection a Link'
+      prompt: 'Enter your link address. Include http://.'
+    image:
+      tooltip: 'Add Embedded Image'
+      prompt: 'Enter the image URL'
+    table:
+      tooltip: 'Add table'
+    hr:
+      tooltip: 'Horizontal rule'
+    list-ol:
+      tooltip: 'Add Ordered List'
+    list-ul:
+      tooltip: 'Add Bulletted List'

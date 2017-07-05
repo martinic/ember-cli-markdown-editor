@@ -2,6 +2,7 @@ import Ember from 'ember';
 import layout from '../templates/components/markdown-editor';
 
 export default Ember.Component.extend({
+  intl: Ember.inject.service(),
   layout: layout,
 
   classNames: ['markdown-editor'],
@@ -9,18 +10,6 @@ export default Ember.Component.extend({
   ////////////////
   //! Variables //
   ////////////////
-
-  lang: {
-    modal: {
-      selectionText: 'Please make a text selection',
-      confirm: 'Confirm',
-      cancel: 'Cancel'
-    },
-    help: {
-      title: 'What is Markdown?',
-      href: 'https://guides.github.com/features/mastering-markdown/'
-    }
-  },
 
   /*
    * The value
@@ -73,7 +62,7 @@ export default Ember.Component.extend({
       group: 1,
       enter: 'start',
       style: 'heading',
-      tooltip: 'Add Heading',
+      tooltip: 'markdown-editor.formats.heading.tooltip',
       iconClass: 'fa-header'
     },
     'bold': {
@@ -82,7 +71,7 @@ export default Ember.Component.extend({
       group: 2,
       enter: 'none',
       style: 'bold',
-      tooltip: 'Make Selection Bold',
+      tooltip: 'markdown-editor.formats.bold.tooltip',
       iconClass: 'fa-bold'
     },
     'italic': {
@@ -91,7 +80,7 @@ export default Ember.Component.extend({
       group: 2,
       enter: 'none',
       style: 'italic',
-      tooltip: 'Make Selection Italic',
+      tooltip: 'markdown-editor.formats.italic.tooltip',
       iconClass: 'fa-italic'
     },
     'quote': {
@@ -100,7 +89,7 @@ export default Ember.Component.extend({
       group: 3,
       enter: 'start',
       style: 'quote',
-      tooltip: 'Add Quoted Text',
+      tooltip: 'markdown-editor.formats.quote.tooltip',
       iconClass: 'fa-quote-right'
     },
     'link': {
@@ -109,9 +98,9 @@ export default Ember.Component.extend({
       group: 4,
       enter: 'none',
       style: 'link',
-      tooltip: 'Make Selection a Link',
+      tooltip: 'markdown-editor.formats.link.tooltip',
       iconClass: 'fa-link',
-      prompt: 'Enter your link address. Include http://.'
+      prompt: 'markdown-editor.formats.link.prompt'
     },
     'image': {
       regex: '![$1]({{result}})',
@@ -119,9 +108,9 @@ export default Ember.Component.extend({
       group: 4,
       enter: 'none',
       style: 'image',
-      tooltip: 'Add Embedded Image',
+      tooltip: 'markdown-editor.formats.image.tooltip',
       iconClass: 'fa-image',
-      prompt: 'Enter the image URL'
+      prompt: 'markdown-editor.formats.image.prompt'
     },
     'table': {
       regex: '\nFirst Header | Second Header\n--- | ---\nFirst column | Second column\n',
@@ -129,7 +118,7 @@ export default Ember.Component.extend({
       group: 5,
       enter: 'start',
       style: 'table',
-      tooltip: 'Add table',
+      tooltip: 'markdown-editor.formats.table.tooltip',
       iconClass: 'fa-table'
     },
     'hr': {
@@ -138,7 +127,7 @@ export default Ember.Component.extend({
       group: 5,
       enter: 'start',
       style: 'hr',
-      tooltip: 'Horizontal rule',
+      tooltip: 'markdown-editor.formats.hr.tooltip',
       iconClass: 'fa-minus'
     },
     'list-ol': {
@@ -147,7 +136,7 @@ export default Ember.Component.extend({
       group: 6,
       enter: 'list',
       style: 'list-ol',
-      tooltip: 'Add Ordered List',
+      tooltip: 'markdown-editor.formats.list-ol.tooltip',
       iconClass: 'fa-list-ol'
     },
     'list-ul': {
@@ -156,7 +145,7 @@ export default Ember.Component.extend({
       group: 6,
       enter: 'list',
       style: 'list-ul',
-      tooltip: 'Add Bulletted List',
+      tooltip: 'markdown-editor.formats.list-ul.tooltip',
       iconClass: 'fa-list-ul'
     }
   },
@@ -188,6 +177,8 @@ export default Ember.Component.extend({
    */
   didInsertElement: function() {
     var that = this;
+
+    that.get('intl').setLocale('en-us');
 
     that.setProperties({
       startPos: 0,
