@@ -178,7 +178,10 @@ export default Ember.Component.extend({
   didInsertElement: function() {
     var that = this;
 
-    that.get('intl').setLocale('en-us');
+    if(!this.get('intl').get('locale')) {
+      that.get('intl').setLocale('en-us');
+      console.log('setLocale');
+    }
 
     that.setProperties({
       startPos: 0,
