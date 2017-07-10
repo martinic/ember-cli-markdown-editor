@@ -155,6 +155,13 @@ export default Ember.Component.extend({
   //////////////////////////
 
   /*
+   * use locale set or fallback to en-us if the application did not set a locale
+   */
+  _locale: Ember.computed('intl.locale', function() {
+      return this.get('intl.locale') || 'en-us';
+    }).readOnly(),
+
+  /*
    * Generated textarea ID for the instance.
    */
   textareaId: Ember.computed('elementId', function() {
@@ -177,11 +184,6 @@ export default Ember.Component.extend({
    */
   didInsertElement: function() {
     var that = this;
-
-    if(!this.get('intl').get('locale')) {
-      that.get('intl').setLocale('en-us');
-      console.log('setLocale');
-    }
 
     that.setProperties({
       startPos: 0,

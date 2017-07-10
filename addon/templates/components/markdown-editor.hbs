@@ -8,10 +8,10 @@
   {{/each}}
 
   <div class="btn-group">
-    <button type="button" title={{t 'markdown-editor.undo.title'}} class="btn btn-default" {{action 'undo'}} disabled={{noUndo}} tabindex="-1"><i class="fa fa-undo"></i></button>
+    <button type="button" title={{t 'markdown-editor.undo.title' locale=_locale}} class="btn btn-default" {{action 'undo'}} disabled={{noUndo}} tabindex="-1"><i class="fa fa-undo"></i></button>
   </div>
 
-  <a class="btn btn-link" title={{t 'markdown-editor.help.title'}} href="{{t 'markdown-editor.help.href'}}" target="_blank" tabindex="-1"><i class="fa fa-question-circle"></i></a>
+  <a class="btn btn-link" title={{t 'markdown-editor.help.title' locale=_locale}} href="{{t 'markdown-editor.help.href' locale=_locale}}" target="_blank" tabindex="-1"><i class="fa fa-question-circle"></i></a>
 </div>
 
 <div class="markdown-editor-editor">
@@ -43,25 +43,25 @@
       {{#if dialog}}
       <div class="modal-header">
        <button type="button" class="close" data-dismiss="modal" aria-label="Close" {{action 'cancel'}}>&times;</button>
-         <h4 class="modal-title" id="gridSystemModalLabel">{{t tooltip}}</h4>
+         <h4 class="modal-title" id="gridSystemModalLabel">{{t tooltip locale=_locale}}</h4>
       </div>
       <div class="modal-body">
-        <p>{{t 'markdown-editor.modal.selectionText'}}</p>
+        <p>{{t 'markdown-editor.modal.selectionText' locale=_locale}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal" {{action 'cancel'}}><span class='fa fa-check'></span> &nbsp;{{t 'markdown-editor.modal.confirm'}}</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" {{action 'cancel'}}><span class='fa fa-check'></span> &nbsp;{{t 'markdown-editor.modal.confirm' locale=_locale}}</button>
       </div>
       {{else}}
       <div class="modal-header">
        <button type="button" class="close" data-dismiss="modal" aria-label="Close" {{action 'cancel'}}>&times;</button>
-         <h4 class="modal-title" id="gridSystemModalLabel">{{t tooltip}}</h4>
+         <h4 class="modal-title" id="gridSystemModalLabel">{{t tooltip locale=_locale}}</h4>
       </div>
       <div class="modal-body">
-        <p>{{input type="text" value=result class="form-control" placeholder=(t promptText)}}</p>
+        <p>{{input type="text" value=result class="form-control" placeholder=(t promptText locale=_locale)}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" {{action 'confirm' result}}><span class='fa fa-check'></span> &nbsp;{{t 'markdown-editor.modal.confirm'}}</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal" {{action 'cancel'}}><span class='fa fa-times'></span> &nbsp;{{t 'markdown-editor.modal.cancel'}}</button>
+        <button type="button" class="btn btn-primary" {{action 'confirm' result}}><span class='fa fa-check'></span> &nbsp;{{t 'markdown-editor.modal.confirm' locale=_locale}}</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" {{action 'cancel'}}><span class='fa fa-times'></span> &nbsp;{{t 'markdown-editor.modal.cancel' locale=_locale}}</button>
       </div>
       {{/if}}
     </div>
