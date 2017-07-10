@@ -2,7 +2,7 @@
   {{#each toolbarBtns as |btnGroup|}}
     <div class="btn-group">
       {{#each btnGroup as |btn|}}
-        <button type="button" class="btn btn-default" {{action 'applyStyle' btn.regex btn.requireSelection btn.prompt btn.tooltip btn.enter}} title={{t btn.tooltip}} tabindex="-1"><i class="fa {{btn.iconClass}}"></i></button>
+        <button type="button" class="btn btn-default" {{action 'applyStyle' btn.regex btn.requireSelection btn.prompt btn.tooltip btn.enter}} title={{t btn.tooltip locale=_locale}} tabindex="-1"><i class="fa {{btn.iconClass}}"></i></button>
       {{/each}}
     </div>
   {{/each}}
