@@ -173,15 +173,20 @@ export default Ember.Component.extend({
   ///////////////////
 
   /*
+   * Set locale to `en-us` if it is not set by the application
+   */
+  init: function() {
+    this._super(...arguments);
+    if(!this.get('intl').get('locale')) {
+      this.get('intl').setLocale('en-us');
+    }
+  },
+
+  /*
    * Binds all the events to the textarea.
    */
   didInsertElement: function() {
     var that = this;
-
-    if(!this.get('intl').get('locale')) {
-      that.get('intl').setLocale('en-us');
-      console.log('setLocale');
-    }
 
     that.setProperties({
       startPos: 0,
