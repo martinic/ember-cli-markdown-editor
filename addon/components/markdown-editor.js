@@ -157,6 +157,17 @@ export default Ember.Component.extend({
   /*
    * Generated textarea ID for the instance.
    */
+  modalTabindex: Ember.computed('tabindex', 'modal', function() {
+    let modal = this.get('modal');
+    if (modal) {
+      return '-1';
+    }
+    return modal ;
+  }),
+
+  /*
+   * Generated textarea ID for the instance.
+   */
   textareaId: Ember.computed('elementId', function() {
     return this.get('elementId') + '-editor';
   }),
