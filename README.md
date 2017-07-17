@@ -80,6 +80,9 @@ This project was originally based on the [ember-bootstrap-markdown](https://gith
 And of course thanks to all our wonderful contributors, [here](https://github.com/martinic/ember-cli-markdown-editor/graphs/contributors).
 
 ## Changelog
+* **0.1.0-beta.3**
+  - Add [ember-intl](https://github.com/ember-intl/ember-intl) translations
+  - Add tabindex='-1' if modal is true
 * **0.1.0-beta.2**
   - Add some readme
 * **0.1.0-beta.1**
