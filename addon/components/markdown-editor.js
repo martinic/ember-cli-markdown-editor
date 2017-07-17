@@ -26,7 +26,7 @@ export default Ember.Component.extend({
    */
   undoHistory: Ember.A(),
 
-  btns: 'heading,bold,italic,quote,link,image,table,hr,list-ol,list-ul',
+  btns: 'heading,bold,italic,quote,link,image,table,hr,list-ol,list-ul,undo,help',
 
   /*
    * Builds toolbar out of the supplied string of buttons.
@@ -63,7 +63,8 @@ export default Ember.Component.extend({
       enter: 'start',
       style: 'heading',
       tooltip: 'markdown-editor.formats.heading.tooltip',
-      iconClass: 'fa-header'
+      iconClass: 'fa fa-header',
+      defaultType: true
     },
     'bold': {
       regex: '**$1**',
@@ -72,7 +73,8 @@ export default Ember.Component.extend({
       enter: 'none',
       style: 'bold',
       tooltip: 'markdown-editor.formats.bold.tooltip',
-      iconClass: 'fa-bold'
+      iconClass: 'fa fa-bold',
+      defaultType: true
     },
     'italic': {
       regex: '*$1*',
@@ -81,7 +83,8 @@ export default Ember.Component.extend({
       enter: 'none',
       style: 'italic',
       tooltip: 'markdown-editor.formats.italic.tooltip',
-      iconClass: 'fa-italic'
+      iconClass: 'fa fa-italic',
+      defaultType: true
     },
     'quote': {
       regex: '> $1',
@@ -90,7 +93,8 @@ export default Ember.Component.extend({
       enter: 'start',
       style: 'quote',
       tooltip: 'markdown-editor.formats.quote.tooltip',
-      iconClass: 'fa-quote-right'
+      iconClass: 'fa fa-quote-right',
+      defaultType: true
     },
     'link': {
       regex: '[$1]({{result}})',
@@ -99,8 +103,9 @@ export default Ember.Component.extend({
       enter: 'none',
       style: 'link',
       tooltip: 'markdown-editor.formats.link.tooltip',
-      iconClass: 'fa-link',
-      prompt: 'markdown-editor.formats.link.prompt'
+      iconClass: 'fa fa-link',
+      prompt: 'markdown-editor.formats.link.prompt',
+      defaultType: true
     },
     'image': {
       regex: '![$1]({{result}})',
@@ -109,8 +114,9 @@ export default Ember.Component.extend({
       enter: 'none',
       style: 'image',
       tooltip: 'markdown-editor.formats.image.tooltip',
-      iconClass: 'fa-image',
-      prompt: 'markdown-editor.formats.image.prompt'
+      iconClass: 'fa fa-image',
+      prompt: 'markdown-editor.formats.image.prompt',
+      defaultType: true
     },
     'table': {
       regex: '\nFirst Header | Second Header\n--- | ---\nFirst column | Second column\n',
@@ -119,7 +125,8 @@ export default Ember.Component.extend({
       enter: 'start',
       style: 'table',
       tooltip: 'markdown-editor.formats.table.tooltip',
-      iconClass: 'fa-table'
+      iconClass: 'fa fa-table',
+      defaultType: true
     },
     'hr': {
       regex: '\n------------------\n',
@@ -128,7 +135,8 @@ export default Ember.Component.extend({
       enter: 'start',
       style: 'hr',
       tooltip: 'markdown-editor.formats.hr.tooltip',
-      iconClass: 'fa-minus'
+      iconClass: 'fa fa-minus',
+      defaultType: true
     },
     'list-ol': {
       regex: '1. $1',
@@ -137,7 +145,8 @@ export default Ember.Component.extend({
       enter: 'list',
       style: 'list-ol',
       tooltip: 'markdown-editor.formats.list-ol.tooltip',
-      iconClass: 'fa-list-ol'
+      iconClass: 'fa fa-list-ol',
+      defaultType: true
     },
     'list-ul': {
       regex: '* $1',
@@ -146,7 +155,23 @@ export default Ember.Component.extend({
       enter: 'list',
       style: 'list-ul',
       tooltip: 'markdown-editor.formats.list-ul.tooltip',
-      iconClass: 'fa-list-ul'
+      iconClass: 'fa fa-list-ul',
+      defaultType: true
+    },
+    'undo': {
+      group: 7,
+      style: 'undo',
+      tooltip: 'markdown-editor.formats.undo.tooltip',
+      iconClass: 'fa fa-undo',
+      undoType: true
+    },
+    'help': {
+      group: 8,
+      style: 'help',
+      tooltip: 'markdown-editor.formats.help.tooltip',
+      href: 'markdown-editor.formats.help.href',
+      iconClass: 'fa fa-question-circle',
+      helpType: true
     }
   },
 
@@ -155,14 +180,13 @@ export default Ember.Component.extend({
   //////////////////////////
 
   /*
-   * Generated textarea ID for the instance.
+   * Return tabindex='-1' if model is true
    */
   modalTabindex: Ember.computed('tabindex', 'modal', function() {
-    let modal = this.get('modal');
-    if (modal) {
+    if (this.get('modal')) {
       return '-1';
     }
-    return modal ;
+    return this.get('tabindex') ;
   }),
 
   /*

@@ -1,9 +1,4 @@
 markdown-editor:
-  undo:
-    title: 'Undo'
-  help:
-    title: 'What is Markdown?'
-    href: 'https://guides.github.com/features/mastering-markdown/'
   modal:
     selectionText: 'Please make a text selection'
     confirm: 'Confirm'
@@ -31,3 +26,8 @@ markdown-editor:
       tooltip: 'Add Ordered List'
     list-ul:
       tooltip: 'Add Bulletted List'
+    undo:
+      tooltip: 'Undo'
+    help:
+      tooltip: 'What is Markdown?'
+      href: 'https://guides.github.com/features/mastering-markdown/'

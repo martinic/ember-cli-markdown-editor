@@ -10,6 +10,7 @@ Features:
 - Native browser spellchecking
 - Disable Buttons via an optional btns array
 - Undo Button
+- Provide localization via [ember-intl](https://github.com/ember-intl/ember-intl)
 
 ## Requirements
 
@@ -46,7 +47,7 @@ All Buttons
 {{markdown-editor
 rows='8'
 placeholder="Post content"
-btns='heading,bold,italic,quote,link,image,table,hr,list-ol,list-ul'
+btns='heading,bold,italic,quote,link,image,table,hr,list-ol,list-ul,undo,help'
 value=myValue
 }}
 ```
