@@ -62,6 +62,47 @@ value=myValue
 }}
 ```
 
+## Localization
+
+If you include in your project root a folder called `translations` you can add transition files like this per locale:
+
+`translations/nl-nl.yaml`
+```yaml
+markdown-editor:
+  modal:
+    selectionText: 'Maak eerst een selectie'
+    confirm: 'Bevestigen'
+    cancel: 'Annuleren'
+  formats:
+    heading:
+      tooltip: 'Hoofdstuk toevoegen'
+    bold:
+      tooltip: 'Maak de selectie vet'
+    italic:
+      tooltip: 'Maak de selectie schuingedrukt'
+    quote:
+      tooltip: 'Voeg geciteerde tekst toe'
+    link:
+      tooltip: 'Maak een link van de selectie'
+      prompt: 'Vul het linkadres in. Inclusief http://'
+    image:
+      tooltip: 'Voeg een plaatje toe'
+      prompt: 'Voer het afbeeldingadres in. Inclusief http://'
+    table:
+      tooltip: 'Tabel toevoegen'
+    hr:
+      tooltip: 'Horizontale lijn'
+    list-ol:
+      tooltip: 'Voeg genummerde lijst toe'
+    list-ul:
+      tooltip: 'Add Bulletted List'
+    undo:
+      tooltip: 'Ongedaan maken'
+    help:
+      tooltip: 'Wat is Markdown?'
+      href: 'https://guides.github.com/features/mastering-markdown/'
+```
+
 ## Running the Dummy App
 
 * `ember serve`
@@ -80,6 +121,10 @@ This project was originally based on the [ember-bootstrap-markdown](https://gith
 And of course thanks to all our wonderful contributors, [here](https://github.com/martinic/ember-cli-markdown-editor/graphs/contributors).
 
 ## Changelog
+* **0.1.0**
+  - Release v0.1.0
+* **0.1.0-beta.5**
+  - Update ember-intl to v3.2.6
 * **0.1.0-beta.4**
   - Upgrade ember-intl to 2.30.1
 * **0.1.0-beta.3**
