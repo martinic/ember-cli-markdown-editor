@@ -232,49 +232,6 @@ export default Ember.Component.extend({
     });
 
     that.send('clearUndo');
-
-    that.$('.markdown-editor-textarea').on('blur', Ember.$.proxy(that.handleTextareaBlur, that));
-  },
-
-  /*
-   * Unbinds all events.
-   */
-  willDestroyElement: function() {
-    var that = this;
-
-    that.$('.markdown-editor-textarea').off('blur');
-
-//    that.$('.markdown-editor-toolbar .btn').tooltip('destroy');
-  },
-
-  ///////////////////////
-  //! Custom Functions //
-  ///////////////////////
-
-  /*
-   * Gets the selection from the textarea on blur.
-   * This enables the buttons to perform actions on the selection.
-   */
-  handleTextareaBlur: function(){
-    var that = this,
-      textComponent = document.getElementById(that.get('textareaId')),
-      selection, startPos, endPos,
-      lastchar = '\n';
-
-    startPos = textComponent.selectionStart;
-    endPos = textComponent.selectionEnd;
-    selection = textComponent.value.substring(startPos, endPos);
-
-    if (startPos) {
-      lastchar = textComponent.value.substring(startPos - 1, startPos);
-    }
-
-    that.setProperties({
-      startPos: startPos,
-      endPos: endPos,
-      selection: selection,
-      lastchar: lastchar
-    });
   },
 
   //////////////
@@ -282,6 +239,31 @@ export default Ember.Component.extend({
   //////////////
 
   actions: {
+    /*
+     * Gets the selection from the textarea on blur.
+     * This enables the buttons to perform actions on the selection.
+     */
+    handleTextareaBlur: function(){
+      var that = this,
+        textComponent = document.getElementById(that.get('textareaId')),
+        selection, startPos, endPos,
+        lastchar = '\n';
+
+      startPos = textComponent.selectionStart;
+      endPos = textComponent.selectionEnd;
+      selection = textComponent.value.substring(startPos, endPos);
+
+      if (startPos) {
+        lastchar = textComponent.value.substring(startPos - 1, startPos);
+      }
+
+      that.setProperties({
+        startPos: startPos,
+        endPos: endPos,
+        selection: selection,
+        lastchar: lastchar
+      });
+    },
     /*
      * Applies the style to text based on the regex sent.
      * @param regex The supplied regular expression that handles the replacement.

@@ -18,6 +18,7 @@
 
 <div class="markdown-editor-editor">
   {{textarea
+    focus-out=(action 'handleTextareaBlur')
     id=textareaId
     class='markdown-editor-textarea form-control'
     value=value

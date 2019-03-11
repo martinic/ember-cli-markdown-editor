@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-markdown-editor",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Markdown enhanced textarea with native browser spellchecking",
   "keywords": [
     "ember-addon"
