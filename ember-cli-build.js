@@ -5,7 +5,7 @@ module.exports = function(defaults) {
   var app = new EmberAddon(defaults, {
     'svgJar': {
       sourceDirs: [
-        'public/svg',
+        'public/images/icons',
       ],
     },
     
