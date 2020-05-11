@@ -119,6 +119,11 @@ This project was originally based on the [ember-bootstrap-markdown](https://gith
 And of course thanks to all our wonderful contributors, [here](https://github.com/martinic/ember-cli-markdown-editor/graphs/contributors).
 
 ## Changelog
+* **0.2.0**
+  - Integration of ember-svg-jar
+  - Removed Font Awesome from requirements and Installation
+* **0.1.1**
+  - Remove jQuery dependency
 * **0.1.0**
   - Release v0.1.0
 * **0.1.0-beta.5**
