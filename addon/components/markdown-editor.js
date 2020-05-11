@@ -63,7 +63,7 @@ export default Ember.Component.extend({
       enter: 'start',
       style: 'heading',
       tooltip: 'markdown-editor.formats.heading.tooltip',
-      iconClass: 'fa fa-header',
+      iconSvg: 'header',
       defaultType: true
     },
     'bold': {
@@ -73,7 +73,7 @@ export default Ember.Component.extend({
       enter: 'none',
       style: 'bold',
       tooltip: 'markdown-editor.formats.bold.tooltip',
-      iconClass: 'fa fa-bold',
+      iconSvg: 'bold',
       defaultType: true
     },
     'italic': {
@@ -83,7 +83,7 @@ export default Ember.Component.extend({
       enter: 'none',
       style: 'italic',
       tooltip: 'markdown-editor.formats.italic.tooltip',
-      iconClass: 'fa fa-italic',
+      iconSvg: 'italic',
       defaultType: true
     },
     'quote': {
@@ -93,7 +93,7 @@ export default Ember.Component.extend({
       enter: 'start',
       style: 'quote',
       tooltip: 'markdown-editor.formats.quote.tooltip',
-      iconClass: 'fa fa-quote-right',
+      iconSvg: 'quote-right',
       defaultType: true
     },
     'link': {
@@ -103,7 +103,7 @@ export default Ember.Component.extend({
       enter: 'none',
       style: 'link',
       tooltip: 'markdown-editor.formats.link.tooltip',
-      iconClass: 'fa fa-link',
+      iconSvg: 'chain',
       prompt: 'markdown-editor.formats.link.prompt',
       defaultType: true
     },
@@ -114,7 +114,7 @@ export default Ember.Component.extend({
       enter: 'none',
       style: 'image',
       tooltip: 'markdown-editor.formats.image.tooltip',
-      iconClass: 'fa fa-image',
+      iconSvg: 'image',
       prompt: 'markdown-editor.formats.image.prompt',
       defaultType: true
     },
@@ -125,7 +125,7 @@ export default Ember.Component.extend({
       enter: 'start',
       style: 'table',
       tooltip: 'markdown-editor.formats.table.tooltip',
-      iconClass: 'fa fa-table',
+      iconSvg: 'table',
       defaultType: true
     },
     'hr': {
@@ -135,7 +135,7 @@ export default Ember.Component.extend({
       enter: 'start',
       style: 'hr',
       tooltip: 'markdown-editor.formats.hr.tooltip',
-      iconClass: 'fa fa-minus',
+      iconSvg: 'minus',
       defaultType: true
     },
     'list-ol': {
@@ -145,7 +145,7 @@ export default Ember.Component.extend({
       enter: 'list',
       style: 'list-ol',
       tooltip: 'markdown-editor.formats.list-ol.tooltip',
-      iconClass: 'fa fa-list-ol',
+      iconSvg: 'list-ol',
       defaultType: true
     },
     'list-ul': {
@@ -155,14 +155,14 @@ export default Ember.Component.extend({
       enter: 'list',
       style: 'list-ul',
       tooltip: 'markdown-editor.formats.list-ul.tooltip',
-      iconClass: 'fa fa-list-ul',
+      iconSvg: 'list-ul',
       defaultType: true
     },
     'undo': {
       group: 7,
       style: 'undo',
       tooltip: 'markdown-editor.formats.undo.tooltip',
-      iconClass: 'fa fa-undo',
+      iconSvg: 'rotate-left',
       undoType: true
     },
     'help': {
@@ -170,7 +170,7 @@ export default Ember.Component.extend({
       style: 'help',
       tooltip: 'markdown-editor.formats.help.tooltip',
       href: 'markdown-editor.formats.help.href',
-      iconClass: 'fa fa-question-circle',
+      iconSvg: 'question-circle',
       helpType: true
     }
   },

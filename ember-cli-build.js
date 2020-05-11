@@ -3,6 +3,12 @@ const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 module.exports = function(defaults) {
   var app = new EmberAddon(defaults, {
+    'svgJar': {
+      sourceDirs: [
+        'svg',
+      ],
+    },
+    
     // Add options here
   });
 
