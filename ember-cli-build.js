@@ -6,9 +6,8 @@ module.exports = function(defaults) {
     'svgJar': {
       sourceDirs: [
         'svg',
-      ],
+      ],  
     },
-    
     // Add options here
   });
 
