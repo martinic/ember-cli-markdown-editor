@@ -8,11 +8,6 @@ module.exports = function(defaults) {
         'svg',
       ],  
     },
-    'svg': {
-      paths: [
-        'svg'
-      ]
-    },
     // Add options here
   });
 
