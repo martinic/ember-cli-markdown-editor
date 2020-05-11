@@ -3,13 +3,19 @@
     <div class="btn-group">
       {{#each btnGroup as |btn|}}
         {{#if btn.defaultType}}
-          <button type="button" class="btn btn-default" {{action "applyStyle" btn.regex btn.requireSelection btn.prompt btn.tooltip btn.enter}} title={{t btn.tooltip}} tabindex="-1"><i class={{btn.iconClass}}></i></button>
+          <button type="button" class="btn btn-default" {{action "applyStyle" btn.regex btn.requireSelection btn.prompt btn.tooltip btn.enter}} title={{t btn.tooltip}} tabindex="-1">
+            {{svg-jar btn.iconSvg size="1" class="markdown-button"}}
+          </button>
         {{/if}}
         {{#if btn.undoType}}
-          <button type="button" class="btn btn-default" {{action 'undo'}} title={{t btn.tooltip}} disabled={{noUndo}} tabindex="-1"><i class={{btn.iconClass}}></i></button>
+          <button type="button" class="btn btn-default" {{action 'undo'}} title={{t btn.tooltip}} disabled={{noUndo}} tabindex="-1">
+            {{svg-jar btn.iconSvg size="1" class="markdown-button"}}
+          </button>
         {{/if}}
         {{#if btn.helpType}}
-          <a class="btn btn-link" title={{t btn.tooltip}} href="{{t btn.href}}" target="_blank" tabindex="-1"><i class={{btn.iconClass}}></i></a>
+          <a class="btn btn-link" title={{t btn.tooltip}} href="{{t btn.href}}" target="_blank" tabindex="-1">
+            {{svg-jar btn.iconSvg size="1" class="markdown-button" fill="#337ab7"}}
+          </a>
         {{/if}}
       {{/each}}
     </div>
@@ -53,7 +59,8 @@
         <p>{{t 'markdown-editor.modal.selectionText'}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal" {{action 'cancel'}}><span class='fa fa-check'></span> &nbsp;{{t 'markdown-editor.modal.confirm'}}</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" {{action 'cancel'}}>
+          <span>{{svg-jar "check" size="1" fill="white" class="markdown-button"}}</span> &nbsp;{{t 'markdown-editor.modal.confirm'}}</button>
       </div>
       {{else}}
       <div class="modal-header">
@@ -64,8 +71,12 @@
         <p>{{input type="text" value=result class="form-control" placeholder=(t promptText)}}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" {{action 'confirm' result}}><span class='fa fa-check'></span> &nbsp;{{t 'markdown-editor.modal.confirm'}}</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal" {{action 'cancel'}}><span class='fa fa-times'></span> &nbsp;{{t 'markdown-editor.modal.cancel'}}</button>
+        <button type="button" class="btn btn-primary" {{action 'confirm' result}}>
+          <span>{{svg-jar "check" size="1" fill="white" class="markdown-button"}}</span> &nbsp;{{t 'markdown-editor.modal.confirm'}}
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" {{action 'cancel'}}>
+          <span>{{svg-jar "close" size="1" class="markdown-button"}}</span> &nbsp;{{t 'markdown-editor.modal.cancel'}}
+        </button>
       </div>
       {{/if}}
     </div>
