@@ -1,8 +1,12 @@
-import Ember from 'ember';
+import { next } from '@ember/runloop';
+import { computed } from '@ember/object';
+import { A } from '@ember/array';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 import layout from '../templates/components/markdown-editor';
 
-export default Ember.Component.extend({
-  intl: Ember.inject.service(),
+export default Component.extend({
+  intl: service(),
   layout: layout,
 
   classNames: ['markdown-editor'],
@@ -24,14 +28,14 @@ export default Ember.Component.extend({
   /*
    * Undo history array that holds previous values while editing content.
    */
-  undoHistory: Ember.A(),
+  undoHistory: A(),
 
   btns: 'heading,bold,italic,quote,link,image,table,hr,list-ol,list-ul,undo,help',
 
   /*
    * Builds toolbar out of the supplied string of buttons.
    */
-  toolbarBtns: Ember.computed('btns', function() {
+  toolbarBtns: computed('btns', function() {
     var that = this,
       btns = that.get('btns').split(','),
       toolbarBtns = [],
@@ -46,10 +50,10 @@ export default Ember.Component.extend({
     });
 
     btnGroups.forEach(function(btn) {
-      toolbarBtns.push(Ember.A(btn));
+      toolbarBtns.push(A(btn));
     });
 
-    return Ember.A(toolbarBtns);
+    return A(toolbarBtns);
   }),
 
   /*
@@ -182,24 +186,24 @@ export default Ember.Component.extend({
   /*
    * Return tabindex='-1' if model is true
    */
-  modalTabindex: Ember.computed('tabindex', 'modal', function() {
-    if (this.get('modal')) {
+  modalTabindex: computed('tabindex', 'modal', function() {
+    if (this.modal) {
       return '-1';
     }
-    return this.get('tabindex') ;
+    return this.tabindex;
   }),
 
   /*
    * Generated textarea ID for the instance.
    */
-  textareaId: Ember.computed('elementId', function() {
-    return this.get('elementId') + '-editor';
+  textareaId: computed('elementId', function() {
+    return this.elementId + '-editor';
   }),
 
   /*
    * Flag that tells if there are undo steps that can be performed.
    */
-  noUndo: Ember.computed('undoHistory.length', function() {
+  noUndo: computed('undoHistory.length', function() {
     return (this.get('undoHistory.length') < 1) ? true : false;
   }),
 
@@ -212,8 +216,8 @@ export default Ember.Component.extend({
    */
   init: function() {
     this._super(...arguments);
-    if(!this.get('intl').get('locale')) {
-      this.get('intl').setLocale('en-us');
+    if(!this.intl.get('locale')) {
+      this.intl.setLocale('en-us');
     }
   },
 
@@ -275,7 +279,7 @@ export default Ember.Component.extend({
       this.set('promptText', promptText);
       this.set('tooltip', tooltip);
 
-      if(!this.get('selection') && requireSelection){
+      if(!this.selection && requireSelection){
         this.set('modal', true);
         this.set('dialog', true);
       } else if (promptText){
@@ -344,7 +348,7 @@ export default Ember.Component.extend({
 
       if(ctrl.setSelectionRange) {
         ctrl.focus();
-        Ember.run.next(that, function() {
+        next(that, function() {
           ctrl.setSelectionRange(pos, pos);
         });
       } else if(ctrl.createTextRange) {
@@ -375,7 +379,7 @@ export default Ember.Component.extend({
     clearUndo: function() {
       var that = this;
 
-      that.set('undoHistory', Ember.A());
+      that.set('undoHistory', A());
     },
 
     /*
@@ -393,7 +397,7 @@ export default Ember.Component.extend({
       var restoreValue = undoHistory.pop();
 
       that.setProperties({
-        undoHistory: Ember.A(undoHistory),
+        undoHistory: A(undoHistory),
         value: restoreValue
       });
     },
