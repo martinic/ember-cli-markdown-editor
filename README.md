@@ -1,5 +1,7 @@
-# ember-cli-markdown-editor
+ember-cli-markdown-editor
+==============================================================================
 
+<<<<<<< HEAD
 markdown-editor is a markdown enhanced textarea with native browser spellchecking
 
 Features:
@@ -16,9 +18,12 @@ Features:
 
 - ember-cli 2.4.2 or higher
 - Bootstrap CSS
+=======
+[Short description of the addon.]
+>>>>>>> 88f173f (v2.13.3...v3.8.3)
 
-## Installation
 
+<<<<<<< HEAD
 * `ember install ember-cli-bootstrap-css` Or your favorite Bootstrap addon
 * `ember install ember-cli-markdown-editor` This addon
 
@@ -102,16 +107,23 @@ markdown-editor:
 ```
 
 ## Running the Dummy App
+=======
+Compatibility
+------------------------------------------------------------------------------
 
-* `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
+* Ember.js v2.18 or above
+* Ember CLI v2.13 or above
+>>>>>>> 88f173f (v2.13.3...v3.8.3)
 
-## Running Tests
 
-* `npm test` (Runs `ember try:each` to test your addon against multiple Ember versions)
-* `ember test`
-* `ember test --server`
+Installation
+------------------------------------------------------------------------------
 
+```
+ember install ember-cli-markdown-editor
+```
+
+<<<<<<< HEAD
 ## Credits
 
 This project was originally based on the [ember-bootstrap-markdown](https://github.com/ChrisHonniball/ember-bootstrap-markdown) by [@ChrisHonniball](https://github.com/ChrisHonniball), and I really like his code.
@@ -137,3 +149,22 @@ And of course thanks to all our wonderful contributors, [here](https://github.co
   - Add some readme
 * **0.1.0-beta.1**
   - First version
+=======
+
+Usage
+------------------------------------------------------------------------------
+
+[Longer description of how to use the addon in apps.]
+
+
+Contributing
+------------------------------------------------------------------------------
+
+See the [Contributing](CONTRIBUTING.md) guide for details.
+
+
+License
+------------------------------------------------------------------------------
+
+This project is licensed under the [MIT License](LICENSE.md).
+>>>>>>> 88f173f (v2.13.3...v3.8.3)
