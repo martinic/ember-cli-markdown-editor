@@ -8,6 +8,6 @@ module.exports = {
         'node_modules/ember-cli-markdown-editor/svg',
       ]
     },
-  },
+  }
 };
 

@@ -1,11 +1,9 @@
-ember-cli-markdown-editor
-==============================================================================
+# ember-cli-markdown-editor
 
-<<<<<<< HEAD
 markdown-editor is a markdown enhanced textarea with native browser spellchecking
 
 Features:
-- Bootstrap Styling by default
+- Bootstrap 5 Styling by default
 - Font Awesome SVG Icons
 - Supports all textarea Attributes
 - Does not depend on a specific markdown addon to generate html formatted markup
@@ -13,18 +11,16 @@ Features:
 - Disable Buttons via an optional btns array
 - Undo Button
 - Provide localization via [ember-intl](https://github.com/ember-intl/ember-intl)
+- Compact mode
 
 ## Requirements
 
-- ember-cli 2.4.2 or higher
-- Bootstrap CSS
-=======
-[Short description of the addon.]
->>>>>>> 88f173f (v2.13.3...v3.8.3)
+- ember-cli 3.28.4 or higher
+- Bootstrap 5 CSS
 
+## Installation
 
-<<<<<<< HEAD
-* `ember install ember-cli-bootstrap-css` Or your favorite Bootstrap addon
+* `npm install bootstrap` Or your favorite Bootstrap 5 addon
 * `ember install ember-cli-markdown-editor` This addon
 
 ## Usage
@@ -33,36 +29,50 @@ Add the markdown-editor to your templates like you would normaly do with a texta
 
 Minimal
 ```
-{{markdown-editor value=myValue}}
+<MarkdownEditor @value={{this.myValue}} @onChange={{fn (mut this.myValue)}} />
 ```
 
 Common
 ```
-{{markdown-editor
-rows='8'
-placeholder="Post content"
-value=myValue
-}}
+<MarkdownEditor 
+  @rows="8" 
+  @placeholder="Post content" 
+  @value={{this.myValue}} 
+  @onChange={{fn (mut this.myValue)}}
+/>
+```
+
+Compact mode
+```
+<MarkdownEditor 
+  @rows="8" 
+  @placeholder="Post content" 
+  @value={{this.myValue}} 
+  @onChange={{fn (mut this.myValue)}}
+  @compact={{true}}
+/>
 ```
 
 All Buttons
 ```
-{{markdown-editor
-rows='8'
-placeholder="Post content"
-btns='heading,bold,italic,quote,link,image,table,hr,list-ol,list-ul,undo,help'
-value=myValue
-}}
+<MarkdownEditor 
+  @rows="8" 
+  @placeholder="Post content"
+  @btns="heading,bold,italic,quote,link,image,table,hr,list-ol,list-ul,undo,help"
+  @value={{this.myValue}} 
+  @onChange={{fn (mut this.myValue)}}
+/>
 ```
 
 Some Buttons
 ```
-{{markdown-editor
-rows='8'
-placeholder="Post content"
-btns='bold,italic,list-ol,list-ul'
-value=myValue
-}}
+<MarkdownEditor 
+  @rows="8" 
+  @placeholder="Post content"
+  @btns="bold,italic,list-ol,list-ul"
+  @value={{this.myValue}} 
+  @onChange={{fn (mut this.myValue)}}
+/>
 ```
 
 ## Localization
@@ -107,23 +117,16 @@ markdown-editor:
 ```
 
 ## Running the Dummy App
-=======
-Compatibility
-------------------------------------------------------------------------------
 
-* Ember.js v2.18 or above
-* Ember CLI v2.13 or above
->>>>>>> 88f173f (v2.13.3...v3.8.3)
+* `ember serve`
+* Visit your app at [http://localhost:4200](http://localhost:4200).
 
+## Running Tests
 
-Installation
-------------------------------------------------------------------------------
+* `npm test` (Runs `ember try:each` to test your addon against multiple Ember versions)
+* `ember test`
+* `ember test --server`
 
-```
-ember install ember-cli-markdown-editor
-```
-
-<<<<<<< HEAD
 ## Credits
 
 This project was originally based on the [ember-bootstrap-markdown](https://github.com/ChrisHonniball/ember-bootstrap-markdown) by [@ChrisHonniball](https://github.com/ChrisHonniball), and I really like his code.
@@ -131,6 +134,11 @@ This project was originally based on the [ember-bootstrap-markdown](https://gith
 And of course thanks to all our wonderful contributors, [here](https://github.com/martinic/ember-cli-markdown-editor/graphs/contributors).
 
 ## Changelog
+* **0.3.0**
+  - Reworked to Octane syntax.
+  - Update ember-cli to 3.28.4
+  - Update bootstrap to bootstrap 5.1.3
+  - Update ember-intl to v5.7.0
 * **0.2.0**
   - Integration of ember-svg-jar
   - Removed Font Awesome from requirements and Installation
@@ -149,22 +157,3 @@ And of course thanks to all our wonderful contributors, [here](https://github.co
   - Add some readme
 * **0.1.0-beta.1**
   - First version
-=======
-
-Usage
-------------------------------------------------------------------------------
-
-[Longer description of how to use the addon in apps.]
-
-
-Contributing
-------------------------------------------------------------------------------
-
-See the [Contributing](CONTRIBUTING.md) guide for details.
-
-
-License
-------------------------------------------------------------------------------
-
-This project is licensed under the [MIT License](LICENSE.md).
->>>>>>> 88f173f (v2.13.3...v3.8.3)

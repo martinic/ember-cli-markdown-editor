@@ -1,16 +1,12 @@
-import { next } from '@ember/runloop';
-import { computed } from '@ember/object';
-import { A } from '@ember/array';
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
-import layout from '../templates/components/markdown-editor';
+import { tracked } from '@glimmer/tracking';
+import { action } from "@ember/object";
+import { next } from '@ember/runloop';
+import { A } from '@ember/array';
 
-export default Component.extend({
-  intl: service(),
-  layout: layout,
-
-  classNames: ['markdown-editor'],
-
+export default class MarkdownEditorComponent extends Component {
+  @service intl;
   ////////////////
   //! Variables //
   ////////////////
@@ -18,29 +14,47 @@ export default Component.extend({
   /*
    * The value
    */
-  value: "",
+  get value(){
+    return this.args.value;
+  }
 
   /*
    * Holds the previous value of the textarea while editing.
    */
-  previousValue: "",
+  @tracked previousValue = "";
 
   /*
    * Undo history array that holds previous values while editing content.
    */
-  undoHistory: A(),
+  @tracked undoHistory = A();
 
-  btns: 'heading,bold,italic,quote,link,image,table,hr,list-ol,list-ul,undo,help',
+  @tracked modal = false;
+  @tracked result = '';
+  @tracked dialog = '';
+  @tracked regex = '';
+  @tracked enter = '';
+  @tracked promptText = '';
+  @tracked tooltip = '';
+  @tracked lastchar = '';
+  @tracked selection = '';
+  @tracked endPos = '';
+  @tracked startPos = '';
 
   /*
    * Builds toolbar out of the supplied string of buttons.
    */
-  toolbarBtns: computed('btns', function() {
-    var that = this,
-      btns = that.get('btns').split(','),
-      toolbarBtns = [],
-      btnGroups = [],
-      formattingOpts = that.get('_formattingOpts');
+  get toolbarBtns() {
+    let defaultBtns = 'heading,bold,italic,quote,link,image,table,hr,list-ol,list-ul,undo,help';
+    let btns = [];
+    if(this.args.btns){ 
+      btns = this.args.btns.split(',')
+    } else {
+      btns = defaultBtns.split(',')
+    }
+    var that = this;
+    var toolbarBtns = [];
+    var btnGroups = [];
+    var formattingOpts = that._formattingOpts;
 
     btns.forEach(function(type) {
       if(!btnGroups[formattingOpts[type].group]) {
@@ -54,12 +68,12 @@ export default Component.extend({
     });
 
     return A(toolbarBtns);
-  }),
+  }
 
   /*
    * Default formats supplied with the component.
    */
-  _formattingOpts: {
+  _formattingOpts = {
     'heading': {
       regex: '## $1',
       requireSelection: false,
@@ -177,35 +191,43 @@ export default Component.extend({
       iconSvg: 'question-circle',
       helpType: true
     }
-  },
+  }
 
   //////////////////////////
   //! Computed Properties //
   //////////////////////////
 
   /*
-   * Return tabindex='-1' if model is true
+   * Return tabindex='-1' if modal is true
    */
-  modalTabindex: computed('tabindex', 'modal', function() {
+  get modalTabindex() {
     if (this.modal) {
       return '-1';
     }
-    return this.tabindex;
-  }),
+    return this.tabindex ;
+  }
 
   /*
    * Generated textarea ID for the instance.
-   */
-  textareaId: computed('elementId', function() {
-    return this.elementId + '-editor';
-  }),
+   
+  get textareaId() {
+    let textComponents = document.getElementsByClassName('markdown-editor');
+    let newId = '0'
+    if(textComponents.length > 0){
+      newId = textComponents.length + 1;
+    }
+    return 'markdowneditor'+newId;
+  }*/
 
   /*
    * Flag that tells if there are undo steps that can be performed.
    */
-  noUndo: computed('undoHistory.length', function() {
-    return (this.get('undoHistory.length') < 1) ? true : false;
-  }),
+  get noUndo() {
+    if(this.undoHistory.length < 1){
+      return true;
+    }
+    return false;
+  }
 
   ///////////////////
   //! Ember Events //
@@ -214,192 +236,232 @@ export default Component.extend({
   /*
    * Set locale to `en-us` if it is not set by the application
    */
-  init: function() {
-    this._super(...arguments);
-    if(!this.intl.get('locale')) {
+  constructor() {
+    super(...arguments);
+    if(!this.intl.locale) {
       this.intl.setLocale('en-us');
     }
-  },
+    
+    /* Generate textarea ID for the instance. */
+    let textComponents = document.getElementsByClassName('markdown-editor');
+    let newId = textComponents.length + 1;    
+    this.textareaId = 'markdowneditor'+newId;
+    
+    this.previousValue = "";
+    this.undoHistory = A();
+    this.modal = false;
+    this.result = '';
+    this.dialog = '';
+    this.regex = '';
+    this.enter = '';
+    this.promptText = '';
+    this.tooltip = '';
+    this.lastchar = '';
+    this.selection = '';
+    this.endPos = '';
+    this.startPos = '';
+  }
 
+  willDestroy() {
+    super.willDestroy(...arguments);
+
+    this.previousValue = "";
+    this.undoHistory = A();
+    this.modal = false;
+    this.result = '';
+    this.dialog = '';
+    this.regex = '';
+    this.enter = '';
+    this.promptText = '';
+    this.tooltip = '';
+    this.lastchar = '';
+    this.selection = '';
+    this.endPos = '';
+    this.startPos = '';
+  }
+  
   /*
    * Binds all the events to the textarea.
    */
-  didInsertElement: function() {
+  @action eventBinder() {
     var that = this;
 
-    that.setProperties({
-      startPos: 0,
-      endPos: 0,
-      selection: '',
-      lastchar: '\n',
-      previousValue: that.get('value')
-    });
+    that.startPos = 0;
+    that.endPos = 0;
+    that.selection = '';
+    that.lastchar = '\n';
+    that.previousValue = that.value;
 
-    that.send('clearUndo');
-  },
+    that.clearUndo();
+  }
 
   //////////////
   //! Actions //
   //////////////
+  
+  /*
+   * Gets the selection from the textarea on blur.
+   * This enables the buttons to perform actions on the selection.
+   */
+  @action handleTextareaBlur(){
+    let that = this;
+    let textComponent = document.getElementById(that.textareaId);
+    let selection = '';
+    let startPos =''; 
+    let endPos = '';
+    let lastchar = '\n';
 
-  actions: {
-    /*
-     * Gets the selection from the textarea on blur.
-     * This enables the buttons to perform actions on the selection.
-     */
-    handleTextareaBlur: function(){
-      var that = this,
-        textComponent = document.getElementById(that.get('textareaId')),
-        selection, startPos, endPos,
-        lastchar = '\n';
+    startPos = textComponent.selectionStart;
+    endPos = textComponent.selectionEnd;
+    selection = textComponent.value.substring(startPos, endPos);
 
-      startPos = textComponent.selectionStart;
-      endPos = textComponent.selectionEnd;
-      selection = textComponent.value.substring(startPos, endPos);
+    if (startPos) {
+      lastchar = textComponent.value.substring(startPos - 1, startPos);
+    }
 
-      if (startPos) {
-        lastchar = textComponent.value.substring(startPos - 1, startPos);
-      }
-
-      that.setProperties({
-        startPos: startPos,
-        endPos: endPos,
-        selection: selection,
-        lastchar: lastchar
-      });
-    },
-    /*
-     * Applies the style to text based on the regex sent.
-     * @param regex The supplied regular expression that handles the replacement.
-     * @param promptText Supplied text for a standard prompt dialog.
-     */
-    applyStyle: function(regex, requireSelection = false, promptText = null, tooltip = null ,enter){
-      this.set('regex', regex);
-      this.set('enter', enter);
-      this.set('promptText', promptText);
-      this.set('tooltip', tooltip);
-
-      if(!this.selection && requireSelection){
-        this.set('modal', true);
-        this.set('dialog', true);
-      } else if (promptText){
-        this.set('modal', true);
-        this.set('dialog', false);
-      } else {
-        this.set('modal', false);
-        this.send('setValue', regex, enter);
-      }
-    },
-
-    confirm: function (result) {
-      let that = this,
-        regex = that.get('regex'),
-        enter = that.get('enter');
-        regex = regex.replace('{{result}}', result);
-      this.send('setValue', regex, enter);
-      this.set('modal', '');
-    },
-
-    cancel: function () {
-      this.set('modal', '');
-    },
-
-    setValue: function(regex, enter) {
-      let that = this,
-        value = that.get('value'),
-        lastchar =  that.get('lastchar'),
-        selection = that.get('selection'),
-        extraEnter = '';
-
-      if (enter === 'start' || enter === 'list') {
-        if (!lastchar.includes('\n')) {
-          extraEnter = '\n';
-        }
-      }
-      if (enter === 'list') {
-        if (lastchar === ' ') {
-          extraEnter = '';
-        }
-      }
-
-      that.send('addUndoStep', value);
-
-      var newStr = selection.replace(/^(.*)$/gm, regex),
-        newValue = value.substr(0, that.get('startPos')) + extraEnter + newStr + value.substr(that.get('endPos'), value.length),
-        newCursorPos = that.get('startPos') + extraEnter.length + newStr.length,
-        strOffset = extraEnter.length + newStr.length - that.get('selection').length;
-
-      that.setProperties({
-        selection: '',
-        value: newValue,
-        newCursorPos: newCursorPos
-      });
-
-      that.send('setCursor', that.get('endPos') + strOffset);
-    },
-
-    /*
-     * Sets the cursor location in the texterea.
-     * @param pos The desired cursor possition.
-     */
-    setCursor: function(pos) {
-      var that = this,
-        ctrl = document.getElementById(that.get('textareaId'));
-
-      if(ctrl.setSelectionRange) {
-        ctrl.focus();
-        next(that, function() {
-          ctrl.setSelectionRange(pos, pos);
-        });
-      } else if(ctrl.createTextRange) {
-        var range = ctrl.createTextRange();
-        range.collapse(true);
-        range.moveEnd('character', pos);
-        range.moveStart('character', pos);
-        range.select();
-      }
-    },
-
-    /*
-     * Adds a step to the undo array.
-     * @param value The value that is to be saved as an undo step.
-     */
-    addUndoStep: function(value) {
-      var that = this,
-        undoHistory = that.get('undoHistory');
-
-      undoHistory.pushObject(value);
-
-      that.set('undoHistory', undoHistory);
-    },
-
-    /*
-     * Clears out the undo array.
-     */
-    clearUndo: function() {
-      var that = this;
-
-      that.set('undoHistory', A());
-    },
-
-    /*
-     * Reverts the value to a previous value based on the undo array.
-     */
-    undo: function() {
-      var that = this,
-        undoHistory = that.get('undoHistory').toArray();
-
-      if(undoHistory.length === 0){
-        alert('No more steps to undo.');
-        return false;
-      }
-
-      var restoreValue = undoHistory.pop();
-
-      that.setProperties({
-        undoHistory: A(undoHistory),
-        value: restoreValue
-      });
-    },
+    that.startPos = startPos;
+    that.endPos = endPos;
+    that.selection = selection;
+    that.lastchar = lastchar;
   }
-});
+  
+  /*
+   * Applies the style to text based on the regex sent.
+   * @param regex The supplied regular expression that handles the replacement.
+   * @param promptText Supplied text for a standard prompt dialog.
+   */
+  @action applyStyle(regex, requireSelection = false, promptText = null, tooltip = null ,enter){
+    this.regex = regex;
+    this.enter = enter;
+    this.promptText = promptText;
+    this.tooltip = tooltip;
+
+    if(!this.selection && requireSelection){
+      this.modal = true;
+      this.dialog = true;
+    } else if (promptText){
+      this.modal = true;
+      this.dialog = false;
+    } else {
+      this.modal = false;
+      this.setValue(regex, enter);
+    }
+  }
+
+  @action confirm(result) {
+    let that = this;
+    let regex = that.regex;
+    let enter = that.enter;
+    
+    regex = regex.replace('{{result}}', result);
+    this.setValue(regex, enter);
+    this.modal = '';
+    this.result = '';    
+  }
+
+  @action cancel() {
+    this.modal = '';
+    this.result = '';
+  }
+
+  @action setValue(regex, enter) {
+    let that = this;
+    let value = that.value;
+    let lastchar =  that.lastchar;
+    let selection = that.selection;
+    let extraEnter = '';
+
+    if (enter === 'start' || enter === 'list') {
+      if (!lastchar.includes('\n')) {
+        extraEnter = '\n';
+      }
+    }
+    if (enter === 'list') {
+      if (lastchar === ' ') {
+        extraEnter = '';
+      }
+    }
+
+    that.addUndoStep(value);
+
+    let newStr = selection.replace(/^(.*)$/gm, regex);
+    let newValue = value.substr(0, that.startPos) + extraEnter + newStr + value.substr(that.endPos, value.length);
+    let newCursorPos = that.startPos + extraEnter.length + newStr.length;
+    let strOffset = extraEnter.length + newStr.length - that.selection.length;
+
+    that.selection = '';
+    this.args.onChange(newValue);
+    that.newCursorPos = newCursorPos;
+
+    that.setCursor(that.endPos + strOffset);
+  }
+
+  /*
+   * Sets the cursor location in the texterea.
+   * @param pos The desired cursor possition.
+   */
+  @action setCursor(pos) {
+    let that = this;
+    let ctrl = document.getElementById(that.textareaId);
+
+    if(ctrl.setSelectionRange) {
+      ctrl.focus();
+      next(that, function() {
+        ctrl.setSelectionRange(pos, pos);
+      });
+    } else if(ctrl.createTextRange) {
+      let range = ctrl.createTextRange();
+      range.collapse(true);
+      range.moveEnd('character', pos);
+      range.moveStart('character', pos);
+      range.select();
+    }
+  }
+
+  /*
+   * Adds a step to the undo array.
+   * @param value The value that is to be saved as an undo step.
+   */
+  @action addUndoStep(value) {
+    let that = this;
+    let undoHistory = that.undoHistory;
+
+    undoHistory.pushObject(value);
+
+    that.undoHistory = undoHistory;
+  }
+
+  /*
+   * Clears out the undo array.
+   */
+  @action clearUndo() {
+    let that = this;
+    that.undoHistory = A();
+  }
+
+  /*
+   * Reverts the value to a previous value based on the undo array.
+   */
+  @action undo() {
+    let that = this;
+    let undoHistory = that.undoHistory.toArray();
+
+    if(undoHistory.length === 0){
+      alert('No more steps to undo.');
+      return false;
+    }
+
+    var restoreValue = undoHistory.pop();
+
+    that.undoHistory = A(undoHistory);
+    // that.updateValue();
+    this.args.onChange(restoreValue);
+  }
+  
+  @action onChange(value){
+    let newValue = this.args.value;
+    if(this.args.onChange){
+      this.args.onChange(newValue);
+    }
+  }
+}

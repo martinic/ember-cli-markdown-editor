@@ -1,5 +1,6 @@
 import Controller from '@ember/controller';
+import { tracked } from '@glimmer/tracking';
 
-export default Controller.extend({
-  myValue: ''
-});
+export default class ApplicationController extends Controller {
+  @tracked myValue = '';
+}
