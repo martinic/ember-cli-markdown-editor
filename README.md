@@ -4,7 +4,7 @@ markdown-editor is a markdown enhanced textarea with native browser spellcheckin
 
 Features:
 - Bootstrap Styling by default
-- Font Awesome Icons
+- Font Awesome SVG Icons
 - Supports all textarea Attributes
 - Does not depend on a specific markdown addon to generate html formatted markup
 - Native browser spellchecking
@@ -16,12 +16,10 @@ Features:
 
 - ember-cli 2.4.2 or higher
 - Bootstrap CSS
-- Font Awesome CSS an Icons
 
 ## Installation
 
 * `ember install ember-cli-bootstrap-css` Or your favorite Bootstrap addon
-* `ember install ember-font-awesome` Or your favorite Font Awesome addon
 * `ember install ember-cli-markdown-editor` This addon
 
 ## Usage
@@ -121,6 +119,11 @@ This project was originally based on the [ember-bootstrap-markdown](https://gith
 And of course thanks to all our wonderful contributors, [here](https://github.com/martinic/ember-cli-markdown-editor/graphs/contributors).
 
 ## Changelog
+* **0.2.0**
+  - Integration of ember-svg-jar
+  - Removed Font Awesome from requirements and Installation
+* **0.1.1**
+  - Remove jQuery dependency
 * **0.1.0**
   - Release v0.1.0
 * **0.1.0-beta.5**
