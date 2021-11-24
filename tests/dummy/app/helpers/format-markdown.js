@@ -1,7 +1,9 @@
-import Ember from 'ember';
+import Helper from '@ember/component/helper';
+import { htmlSafe } from '@ember/template';
 import marked from 'marked';
 
-export default Ember.Helper.helper(function(params) {
-  let value = params[0];
-  return Ember.String.htmlSafe(marked(value));
-});
+export default class formatMarkdown extends Helper { 
+  compute(params) {    
+    return htmlSafe(marked(params[0]));
+  }
+}

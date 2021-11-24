@@ -1,5 +1,6 @@
-import Ember from "ember";
+import Controller from '@ember/controller';
+import { tracked } from '@glimmer/tracking';
 
-export default Ember.Controller.extend({
-  myValue: ''
-});
+export default class ApplicationController extends Controller {
+  @tracked myValue = '';
+}
