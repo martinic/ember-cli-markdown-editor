@@ -244,7 +244,7 @@ export default class MarkdownEditorComponent extends Component {
     
     /* Generate textarea ID for the instance. */
     let textComponents = document.getElementsByClassName('markdown-editor');
-    let newId = textComponents.length + 1;    
+    let newId = textComponents.length + 1;
     this.textareaId = 'markdowneditor'+newId;
     
     this.previousValue = "";
@@ -365,35 +365,37 @@ export default class MarkdownEditorComponent extends Component {
   }
 
   @action setValue(regex, enter) {
-    let that = this;
-    let value = that.value;
-    let lastchar =  that.lastchar;
-    let selection = that.selection;
-    let extraEnter = '';
+    if(this.args.onChange){
+      let that = this;
+      let value = that.value;
+      let lastchar =  that.lastchar;
+      let selection = that.selection;
+      let extraEnter = '';
 
-    if (enter === 'start' || enter === 'list') {
-      if (!lastchar.includes('\n')) {
-        extraEnter = '\n';
+      if (enter === 'start' || enter === 'list') {
+        if (!lastchar.includes('\n')) {
+          extraEnter = '\n';
+        }
       }
-    }
-    if (enter === 'list') {
-      if (lastchar === ' ') {
-        extraEnter = '';
+      if (enter === 'list') {
+        if (lastchar === ' ') {
+          extraEnter = '';
+        }
       }
+
+      that.addUndoStep(value);
+
+      let newStr = selection.replace(/^(.*)$/gm, regex);
+      let newValue = value.substr(0, that.startPos) + extraEnter + newStr + value.substr(that.endPos, value.length);
+      let newCursorPos = that.startPos + extraEnter.length + newStr.length;
+      let strOffset = extraEnter.length + newStr.length - that.selection.length;
+
+      that.selection = '';
+      this.args.onChange(newValue);
+      that.newCursorPos = newCursorPos;
+
+      that.setCursor(that.endPos + strOffset);
     }
-
-    that.addUndoStep(value);
-
-    let newStr = selection.replace(/^(.*)$/gm, regex);
-    let newValue = value.substr(0, that.startPos) + extraEnter + newStr + value.substr(that.endPos, value.length);
-    let newCursorPos = that.startPos + extraEnter.length + newStr.length;
-    let strOffset = extraEnter.length + newStr.length - that.selection.length;
-
-    that.selection = '';
-    this.args.onChange(newValue);
-    that.newCursorPos = newCursorPos;
-
-    that.setCursor(that.endPos + strOffset);
   }
 
   /*
@@ -443,25 +445,27 @@ export default class MarkdownEditorComponent extends Component {
    * Reverts the value to a previous value based on the undo array.
    */
   @action undo() {
-    let that = this;
-    let undoHistory = that.undoHistory.toArray();
+    if(this.args.onChange){
+      let that = this;
+      let undoHistory = that.undoHistory.toArray();
 
-    if(undoHistory.length === 0){
-      alert('No more steps to undo.');
-      return false;
+      if(undoHistory.length === 0){
+        alert('No more steps to undo.');
+        return false;
+      }
+
+      var restoreValue = undoHistory.pop();
+
+      that.undoHistory = A(undoHistory);
+      // that.updateValue();
+      this.args.onChange(restoreValue);
     }
-
-    var restoreValue = undoHistory.pop();
-
-    that.undoHistory = A(undoHistory);
-    // that.updateValue();
-    this.args.onChange(restoreValue);
   }
   
   @action onChange(value){
-    let newValue = this.args.value;
     if(this.args.onChange){
-      this.args.onChange(newValue);
+      let newValue = this.args.value;
+        this.args.onChange(newValue);
     }
   }
 }

@@ -26,7 +26,7 @@
   <div class="markdown-editor-editor pt-1">
     <Textarea
       {{on "focusout" (fn this.handleTextareaBlur)}}
-      {{on "keyup" this.onChange}}
+      {{on "keyup" (fn this.onChange)}}
       
       id={{this.textareaId}}
       class="markdown-editor-textarea form-control"
