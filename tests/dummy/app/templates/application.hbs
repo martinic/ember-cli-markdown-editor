@@ -1,13 +1,13 @@
 <p>
-  <MarkdownEditor 
-    @rows="8" 
-    @placeholder="Post content" 
-    @value={{this.myValue}} 
+  <MarkdownEditor
+    @rows='8'
+    @placeholder='Post content'
+    @value={{this.myValue}}
     @onChange={{fn (mut this.myValue)}}
     @compact={{true}}
   />
 </p>
-<hr>
+<hr />
 <p>{{format-markdown this.myValue}}</p>
 
 {{outlet}}

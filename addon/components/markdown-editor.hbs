@@ -1,21 +1,64 @@
-<div class="markdown-editor" {{did-insert (fn this.eventBinder)}}>
-  <div class="markdown-editor-toolbar">
+{{#unless this.intl.primaryLocale}}
+  
+{{/unless}}
+<div class='markdown-editor' {{did-insert (fn this.eventBinder)}}>
+  <div class='markdown-editor-toolbar'>
     {{#each this.toolbarBtns as |btnGroup|}}
-      <div class={{if @compact "btn-group btn-group-sm" "btn-group"}}>
+      <div class={{if @compact 'btn-group btn-group-sm' 'btn-group'}}>
         {{#each btnGroup as |btn|}}
           {{#if btn.defaultType}}
-            <button type="button" class={{if @compact "btn btn-light p-1 lh-1" "btn btn-light"}} {{on "click" (fn this.applyStyle btn.regex btn.requireSelection btn.prompt btn.tooltip btn.enter)}} title={{t btn.tooltip}} tabindex="-1">
-              {{svg-jar btn.iconSvg size="1" class="markdown-button"}}
+            <button
+              type='button'
+              class={{if @compact 'btn btn-light p-1 lh-1' 'btn btn-light'}}
+              {{on
+                'click'
+                (fn
+                  this.applyStyle
+                  btn.regex
+                  btn.requireSelection
+                  btn.prompt
+                  btn.tooltip
+                  btn.enter
+                )
+              }}
+              title={{t btn.tooltip}}
+              tabindex='-1'
+            >
+              {{svg-jar btn.iconSvg size='1' class='markdown-button'}}
             </button>
           {{/if}}
           {{#if btn.undoType}}
-            <button type="button" class={{if @compact "btn btn-light p-1 lh-1" "btn btn-light"}} {{on "click" this.undo}} title={{t btn.tooltip}} disabled={{if this.undoHistory false true}} tabindex="-1">
-              {{svg-jar btn.iconSvg size="1" class="markdown-button"}}
+            <button
+              type='button'
+              class={{if @compact 'btn btn-light p-1 lh-1' 'btn btn-light'}}
+              {{on 'click' this.undo}}
+              title={{t btn.tooltip}}
+              disabled={{if this.undoHistory false true}}
+              tabindex='-1'
+            >
+              {{svg-jar btn.iconSvg size='1' class='markdown-button'}}
             </button>
           {{/if}}
           {{#if btn.helpType}}
-            <a class={{if @compact "btn btn-link py-1 px-0 lh-1" "btn btn-link py-1 px-0"}} title={{t btn.tooltip}} href={{t btn.href}} target="_blank" rel="noopener" link-rel-noopener tabindex="-1">
-              {{svg-jar btn.iconSvg size="1" class="markdown-button" fill="#337ab7"}}
+            <a
+              class={{if
+                @compact
+                'btn btn-link py-1 px-0 lh-1'
+                'btn btn-link py-1 px-0'
+              }}
+              title={{t btn.tooltip}}
+              href={{t btn.href}}
+              target='_blank'
+              rel='noopener'
+              link-rel-noopener
+              tabindex='-1'
+            >
+              {{svg-jar
+                btn.iconSvg
+                size='1'
+                class='markdown-button'
+                fill='#337ab7'
+              }}
             </a>
           {{/if}}
         {{/each}}
@@ -23,13 +66,12 @@
     {{/each}}
   </div>
 
-  <div class="markdown-editor-editor pt-1">
+  <div class='markdown-editor-editor pt-1'>
     <Textarea
-      {{on "focusout" (fn this.handleTextareaBlur)}}
-      {{on "keyup" (fn this.onChange)}}
-      
+      {{on 'focusout' (fn this.handleTextareaBlur)}}
+      {{on 'keyup' (fn this.onChange)}}
       id={{this.textareaId}}
-      class="markdown-editor-textarea form-control"
+      class='markdown-editor-textarea form-control'
       @value={{@value}}
       autofocus={{@autofocus}}
       cols={{@cols}}
@@ -43,46 +85,105 @@
       required={{@required}}
       rows={{@rows}}
       tabindex={{if this.modal -1 this.modalTabindex}}
-      wrap={{@wrap}} />
-      
+      wrap={{@wrap}}
+    />
+
   </div>
 </div>
-  {{#if this.modal}}
-    <style>.modal .modal-dialog { width: 500px; }</style>
-    <div class="modal d-block" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
-      <div class="modal-dialog">
-        <div class="modal-content" role="document">
-          {{#if this.dialog}}
-            <div class="modal-header py-2">
-              <h5 class="modal-title" id="gridSystemModalLabel">{{t this.tooltip}}</h5>
-              <button type="button" class="btn-close float-end" data-dismiss="modal" aria-label="Close" {{on "click" this.cancel}}></button>
-            </div>
-            <div class="modal-body pb-0">
-              <p>{{t "markdown-editor.modal.selectionText"}}</p>
-            </div>
-            <div class="modal-footer py-2">
-              <button type="button" class="btn btn-secondary float-end" data-dismiss="modal" {{on "click" this.cancel}}>
-                <span>{{svg-jar "check" size="1" fill="white" class="markdown-button"}}</span> &nbsp;{{t "markdown-editor.modal.confirm"}}
-              </button>
-            </div>
-          {{else}}
-            <div class="modal-header py-2">
-              <h5 class="modal-title" id="gridSystemModalLabel">{{t this.tooltip}}</h5>
-              <button type="button" class="btn-close float-end" data-dismiss="modal" aria-label="Close" {{on "click" this.cancel}}></button>
-            </div>
-            <div class="modal-body pb-0">
-              <p><Input type="text" @value={{this.result}} class="form-control" placeholder={{t this.promptText}} /></p>
-            </div>
-            <div class="modal-footer py-2">
-              <button type="button" class="btn btn-primary" {{on "click" (fn this.confirm this.result)}}>
-                <span>{{svg-jar "check" size="1" fill="white" class="markdown-button"}}</span> &nbsp;{{t "markdown-editor.modal.confirm"}}
-              </button>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal" {{on "click" this.cancel}}>
-                <span class="text-white">{{svg-jar "close" size="1" class="markdown-button" fill="white"}}</span> &nbsp;{{t "markdown-editor.modal.cancel"}}
-              </button>
-            </div>
-          {{/if}}
-        </div>
+{{#if this.modal}}
+  <style>.modal .modal-dialog { width: 500px; }</style>
+  <div
+    class='modal d-block'
+    tabindex='-1'
+    role='dialog'
+    aria-labelledby='gridSystemModalLabel'
+  >
+    <div class='modal-dialog'>
+      <div class='modal-content' role='document'>
+        {{#if this.dialog}}
+          <div class='modal-header py-2'>
+            <h5 class='modal-title' id='gridSystemModalLabel'>{{t
+                this.tooltip
+              }}</h5>
+            <button
+              type='button'
+              class='btn-close float-end'
+              data-dismiss='modal'
+              aria-label='Close'
+              {{on 'click' this.cancel}}
+            ></button>
+          </div>
+          <div class='modal-body pb-0'>
+            <p>{{t 'markdown-editor.modal.selectionText'}}</p>
+          </div>
+          <div class='modal-footer py-2'>
+            <button
+              type='button'
+              class='btn btn-secondary float-end'
+              data-dismiss='modal'
+              {{on 'click' this.cancel}}
+            >
+              <span>{{svg-jar
+                  'check'
+                  size='1'
+                  fill='white'
+                  class='markdown-button'
+                }}</span>
+              &nbsp;{{t 'markdown-editor.modal.confirm'}}
+            </button>
+          </div>
+        {{else}}
+          <div class='modal-header py-2'>
+            <h5 class='modal-title' id='gridSystemModalLabel'>{{t
+                this.tooltip
+              }}</h5>
+            <button
+              type='button'
+              class='btn-close float-end'
+              data-dismiss='modal'
+              aria-label='Close'
+              {{on 'click' this.cancel}}
+            ></button>
+          </div>
+          <div class='modal-body pb-0'>
+            <p><Input
+                type='text'
+                @value={{this.result}}
+                class='form-control'
+                placeholder={{t this.promptText}}
+              /></p>
+          </div>
+          <div class='modal-footer py-2'>
+            <button
+              type='button'
+              class='btn btn-primary'
+              {{on 'click' (fn this.confirm this.result)}}
+            >
+              <span>{{svg-jar
+                  'check'
+                  size='1'
+                  fill='white'
+                  class='markdown-button'
+                }}</span>
+              &nbsp;{{t 'markdown-editor.modal.confirm'}}
+            </button>
+            <button
+              type='button'
+              class='btn btn-secondary'
+              data-dismiss='modal'
+              {{on 'click' this.cancel}}
+            >
+              <span class='text-white'>{{svg-jar
+                  'close'
+                  size='1'
+                  class='markdown-button'
+                  fill='white'
+                }}</span>
+              &nbsp;{{t 'markdown-editor.modal.cancel'}}
+            </button>
+          </div>
+        {{/if}}
       </div>
     </div>
-  {{/if}}
+  </div>
+{{/if}}
