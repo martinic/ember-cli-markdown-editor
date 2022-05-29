@@ -470,17 +470,10 @@ export default class MarkdownEditorComponent extends Component {
     }
   }
 
-  @action onChange(value) {
+  @action onChange() {
     if (this.args.onChange) {
       let newValue = this.args.value;
       this.args.onChange(newValue);
     }
-  }
-  
-  @action setDefaultLocale(){
-    //if(!this.intl.primaryLocale) {
-    //  this.intl.setLocale(['en-us']);
-    //
-    console.log("hola");
   }
 }

@@ -27,6 +27,7 @@ Features:
 ## Usage
 
 First make sure your route file app/routes/application.js sets the default language for the intl service:
+
 ```
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
@@ -40,7 +41,6 @@ export default class ApplicationRoute extends Route {
   }
 }
 ```
-
 
 Add the markdown-editor to your templates like you would normaly do with a textarea but passing a param function to update the value, like in the examples.
 

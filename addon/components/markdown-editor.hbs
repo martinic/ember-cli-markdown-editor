@@ -1,7 +1,5 @@
-{{#unless this.intl.primaryLocale}}
-  
-{{/unless}}
-<div class='markdown-editor' {{did-insert (fn this.eventBinder)}}>
+{{#unless this.intl.primaryLocale}}{{/unless}}
+<div class='markdown-editor' {{did-insert this.eventBinder}}>
   <div class='markdown-editor-toolbar'>
     {{#each this.toolbarBtns as |btnGroup|}}
       <div class={{if @compact 'btn-group btn-group-sm' 'btn-group'}}>
@@ -49,7 +47,7 @@
               title={{t btn.tooltip}}
               href={{t btn.href}}
               target='_blank'
-              rel='noopener'
+              rel='noopener noreferrer'
               link-rel-noopener
               tabindex='-1'
             >
@@ -68,12 +66,11 @@
 
   <div class='markdown-editor-editor pt-1'>
     <Textarea
-      {{on 'focusout' (fn this.handleTextareaBlur)}}
-      {{on 'keyup' (fn this.onChange)}}
+      {{on 'focusout' this.handleTextareaBlur}}
+      {{on 'keyup' this.onChange}}
       id={{this.textareaId}}
       class='markdown-editor-textarea form-control'
       @value={{@value}}
-      autofocus={{@autofocus}}
       cols={{@cols}}
       dirname={{@dirname}}
       disabled={{@disabled}}
@@ -147,10 +144,11 @@
           </div>
           <div class='modal-body pb-0'>
             <p><Input
-                type='text'
+                @type='text'
                 @value={{this.result}}
                 class='form-control'
                 placeholder={{t this.promptText}}
+                aria-label='Input text'
               /></p>
           </div>
           <div class='modal-footer py-2'>
