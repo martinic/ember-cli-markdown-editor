@@ -4,10 +4,8 @@ const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 module.exports = function (defaults) {
   let app = new EmberAddon(defaults, {
-    'svgJar': {
-      sourceDirs: [
-        'svg',
-      ],  
+    svgJar: {
+      sourceDirs: ['svg'],
     },
     // Add options here
   });
@@ -20,7 +18,6 @@ module.exports = function (defaults) {
   */
   app.import('node_modules/bootstrap/dist/css/bootstrap.min.css');
 
-  
   const { maybeEmbroider } = require('@embroider/test-setup');
   return maybeEmbroider(app, {
     skipBabel: [
