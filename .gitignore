@@ -18,6 +18,9 @@
 /libpeerconnection.log
 /npm-debug.log*
 /testem.log
+/yarn-error.log
+/package-lock.json
+/yarn.lock
 
 # ember-try
 /.node_modules.ember-try/
