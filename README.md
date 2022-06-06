@@ -160,7 +160,7 @@ And of course thanks to all our wonderful contributors, [here](https://github.co
 
 - **0.4.0**
   - Updated ember to 4.3.0
-  - Updated ember-intl to 6.0.0-beta.2 so it can be used with ember 4.3.0.
+  - Updated ember-intl to 6.0.0-beta.3 so it can be used with ember 4.3.0.
 - **0.3.0**
   - Reworked to Octane syntax.
   - Update ember-cli to 3.28.4
