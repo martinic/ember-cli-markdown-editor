@@ -16,7 +16,7 @@ Features:
 
 ## Requirements
 
-- ember-cli 4.3.0 or higher
+- ember-cli 3.28.4 or higher
 - Bootstrap 5 CSS
 
 ## Installation
