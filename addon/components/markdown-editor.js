@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { action } from "@ember/object";
+import { action } from '@ember/object';
 import { next } from '@ember/runloop';
 import { A } from '@ember/array';
 
@@ -14,14 +14,14 @@ export default class MarkdownEditorComponent extends Component {
   /*
    * The value
    */
-  get value(){
+  get value() {
     return this.args.value;
   }
 
   /*
    * Holds the previous value of the textarea while editing.
    */
-  @tracked previousValue = "";
+  @tracked previousValue = '';
 
   /*
    * Undo history array that holds previous values while editing content.
@@ -44,26 +44,27 @@ export default class MarkdownEditorComponent extends Component {
    * Builds toolbar out of the supplied string of buttons.
    */
   get toolbarBtns() {
-    let defaultBtns = 'heading,bold,italic,quote,link,image,table,hr,list-ol,list-ul,undo,help';
+    let defaultBtns =
+      'heading,bold,italic,quote,link,image,table,hr,list-ol,list-ul,undo,help';
     let btns = [];
-    if(this.args.btns){ 
-      btns = this.args.btns.split(',')
+    if (this.args.btns) {
+      btns = this.args.btns.split(',');
     } else {
-      btns = defaultBtns.split(',')
+      btns = defaultBtns.split(',');
     }
     var that = this;
     var toolbarBtns = [];
     var btnGroups = [];
     var formattingOpts = that._formattingOpts;
 
-    btns.forEach(function(type) {
-      if(!btnGroups[formattingOpts[type].group]) {
+    btns.forEach(function (type) {
+      if (!btnGroups[formattingOpts[type].group]) {
         btnGroups[formattingOpts[type].group] = [];
       }
       btnGroups[formattingOpts[type].group].push(formattingOpts[type]);
     });
 
-    btnGroups.forEach(function(btn) {
+    btnGroups.forEach(function (btn) {
       toolbarBtns.push(A(btn));
     });
 
@@ -74,7 +75,7 @@ export default class MarkdownEditorComponent extends Component {
    * Default formats supplied with the component.
    */
   _formattingOpts = {
-    'heading': {
+    heading: {
       regex: '## $1',
       requireSelection: false,
       group: 1,
@@ -82,9 +83,9 @@ export default class MarkdownEditorComponent extends Component {
       style: 'heading',
       tooltip: 'markdown-editor.formats.heading.tooltip',
       iconSvg: 'header',
-      defaultType: true
+      defaultType: true,
     },
-    'bold': {
+    bold: {
       regex: '**$1**',
       requireSelection: true,
       group: 2,
@@ -92,9 +93,9 @@ export default class MarkdownEditorComponent extends Component {
       style: 'bold',
       tooltip: 'markdown-editor.formats.bold.tooltip',
       iconSvg: 'bold',
-      defaultType: true
+      defaultType: true,
     },
-    'italic': {
+    italic: {
       regex: '*$1*',
       requireSelection: true,
       group: 2,
@@ -102,9 +103,9 @@ export default class MarkdownEditorComponent extends Component {
       style: 'italic',
       tooltip: 'markdown-editor.formats.italic.tooltip',
       iconSvg: 'italic',
-      defaultType: true
+      defaultType: true,
     },
-    'quote': {
+    quote: {
       regex: '> $1',
       requireSelection: false,
       group: 3,
@@ -112,9 +113,9 @@ export default class MarkdownEditorComponent extends Component {
       style: 'quote',
       tooltip: 'markdown-editor.formats.quote.tooltip',
       iconSvg: 'quote-right',
-      defaultType: true
+      defaultType: true,
     },
-    'link': {
+    link: {
       regex: '[$1]({{result}})',
       requireSelection: true,
       group: 4,
@@ -123,9 +124,9 @@ export default class MarkdownEditorComponent extends Component {
       tooltip: 'markdown-editor.formats.link.tooltip',
       iconSvg: 'chain',
       prompt: 'markdown-editor.formats.link.prompt',
-      defaultType: true
+      defaultType: true,
     },
-    'image': {
+    image: {
       regex: '![$1]({{result}})',
       requireSelection: false,
       group: 4,
@@ -134,19 +135,20 @@ export default class MarkdownEditorComponent extends Component {
       tooltip: 'markdown-editor.formats.image.tooltip',
       iconSvg: 'image',
       prompt: 'markdown-editor.formats.image.prompt',
-      defaultType: true
+      defaultType: true,
     },
-    'table': {
-      regex: '\nFirst Header | Second Header\n--- | ---\nFirst column | Second column\n',
+    table: {
+      regex:
+        '\nFirst Header | Second Header\n--- | ---\nFirst column | Second column\n',
       requireSelection: false,
       group: 5,
       enter: 'start',
       style: 'table',
       tooltip: 'markdown-editor.formats.table.tooltip',
       iconSvg: 'table',
-      defaultType: true
+      defaultType: true,
     },
-    'hr': {
+    hr: {
       regex: '\n------------------\n',
       requireSelection: false,
       group: 5,
@@ -154,7 +156,7 @@ export default class MarkdownEditorComponent extends Component {
       style: 'hr',
       tooltip: 'markdown-editor.formats.hr.tooltip',
       iconSvg: 'minus',
-      defaultType: true
+      defaultType: true,
     },
     'list-ol': {
       regex: '1. $1',
@@ -164,7 +166,7 @@ export default class MarkdownEditorComponent extends Component {
       style: 'list-ol',
       tooltip: 'markdown-editor.formats.list-ol.tooltip',
       iconSvg: 'list-ol',
-      defaultType: true
+      defaultType: true,
     },
     'list-ul': {
       regex: '* $1',
@@ -174,24 +176,24 @@ export default class MarkdownEditorComponent extends Component {
       style: 'list-ul',
       tooltip: 'markdown-editor.formats.list-ul.tooltip',
       iconSvg: 'list-ul',
-      defaultType: true
+      defaultType: true,
     },
-    'undo': {
+    undo: {
       group: 7,
       style: 'undo',
       tooltip: 'markdown-editor.formats.undo.tooltip',
       iconSvg: 'rotate-left',
-      undoType: true
+      undoType: true,
     },
-    'help': {
+    help: {
       group: 8,
       style: 'help',
       tooltip: 'markdown-editor.formats.help.tooltip',
       href: 'markdown-editor.formats.help.href',
       iconSvg: 'question-circle',
-      helpType: true
-    }
-  }
+      helpType: true,
+    },
+  };
 
   //////////////////////////
   //! Computed Properties //
@@ -204,7 +206,7 @@ export default class MarkdownEditorComponent extends Component {
     if (this.modal) {
       return '-1';
     }
-    return this.tabindex ;
+    return this.tabindex;
   }
 
   /*
@@ -223,14 +225,14 @@ export default class MarkdownEditorComponent extends Component {
    * Flag that tells if there are undo steps that can be performed.
    */
   get noUndo() {
-    if(this.undoHistory.length < 1){
+    if (this.undoHistory.length < 1) {
       return true;
     }
     return false;
   }
 
   ///////////////////
-  //! Ember Events //
+  //! Lifecycle hooks //
   ///////////////////
 
   /*
@@ -238,16 +240,12 @@ export default class MarkdownEditorComponent extends Component {
    */
   constructor() {
     super(...arguments);
-    if(!this.intl.locale) {
-      this.intl.setLocale('en-us');
-    }
-    
     /* Generate textarea ID for the instance. */
     let textComponents = document.getElementsByClassName('markdown-editor');
-    let newId = textComponents.length + 1;    
-    this.textareaId = 'markdowneditor'+newId;
-    
-    this.previousValue = "";
+    let newId = textComponents.length + 1;
+    this.textareaId = 'markdowneditor' + newId;
+
+    this.previousValue = '';
     this.undoHistory = A();
     this.modal = false;
     this.result = '';
@@ -265,7 +263,7 @@ export default class MarkdownEditorComponent extends Component {
   willDestroy() {
     super.willDestroy(...arguments);
 
-    this.previousValue = "";
+    this.previousValue = '';
     this.undoHistory = A();
     this.modal = false;
     this.result = '';
@@ -279,7 +277,7 @@ export default class MarkdownEditorComponent extends Component {
     this.endPos = '';
     this.startPos = '';
   }
-  
+
   /*
    * Binds all the events to the textarea.
    */
@@ -298,16 +296,16 @@ export default class MarkdownEditorComponent extends Component {
   //////////////
   //! Actions //
   //////////////
-  
+
   /*
    * Gets the selection from the textarea on blur.
    * This enables the buttons to perform actions on the selection.
    */
-  @action handleTextareaBlur(){
+  @action handleTextareaBlur() {
     let that = this;
     let textComponent = document.getElementById(that.textareaId);
     let selection = '';
-    let startPos =''; 
+    let startPos = '';
     let endPos = '';
     let lastchar = '\n';
 
@@ -324,22 +322,28 @@ export default class MarkdownEditorComponent extends Component {
     that.selection = selection;
     that.lastchar = lastchar;
   }
-  
+
   /*
    * Applies the style to text based on the regex sent.
    * @param regex The supplied regular expression that handles the replacement.
    * @param promptText Supplied text for a standard prompt dialog.
    */
-  @action applyStyle(regex, requireSelection = false, promptText = null, tooltip = null ,enter){
+  @action applyStyle(
+    regex,
+    requireSelection = false,
+    promptText = null,
+    tooltip = null,
+    enter
+  ) {
     this.regex = regex;
     this.enter = enter;
     this.promptText = promptText;
     this.tooltip = tooltip;
 
-    if(!this.selection && requireSelection){
+    if (!this.selection && requireSelection) {
       this.modal = true;
       this.dialog = true;
-    } else if (promptText){
+    } else if (promptText) {
       this.modal = true;
       this.dialog = false;
     } else {
@@ -352,11 +356,11 @@ export default class MarkdownEditorComponent extends Component {
     let that = this;
     let regex = that.regex;
     let enter = that.enter;
-    
+
     regex = regex.replace('{{result}}', result);
     this.setValue(regex, enter);
     this.modal = '';
-    this.result = '';    
+    this.result = '';
   }
 
   @action cancel() {
@@ -365,35 +369,41 @@ export default class MarkdownEditorComponent extends Component {
   }
 
   @action setValue(regex, enter) {
-    let that = this;
-    let value = that.value;
-    let lastchar =  that.lastchar;
-    let selection = that.selection;
-    let extraEnter = '';
+    if (this.args.onChange) {
+      let that = this;
+      let value = that.value;
+      let lastchar = that.lastchar;
+      let selection = that.selection;
+      let extraEnter = '';
 
-    if (enter === 'start' || enter === 'list') {
-      if (!lastchar.includes('\n')) {
-        extraEnter = '\n';
+      if (enter === 'start' || enter === 'list') {
+        if (!lastchar.includes('\n')) {
+          extraEnter = '\n';
+        }
       }
-    }
-    if (enter === 'list') {
-      if (lastchar === ' ') {
-        extraEnter = '';
+      if (enter === 'list') {
+        if (lastchar === ' ') {
+          extraEnter = '';
+        }
       }
+
+      that.addUndoStep(value);
+
+      let newStr = selection.replace(/^(.*)$/gm, regex);
+      let newValue =
+        value.substr(0, that.startPos) +
+        extraEnter +
+        newStr +
+        value.substr(that.endPos, value.length);
+      let newCursorPos = that.startPos + extraEnter.length + newStr.length;
+      let strOffset = extraEnter.length + newStr.length - that.selection.length;
+
+      that.selection = '';
+      this.args.onChange(newValue);
+      that.newCursorPos = newCursorPos;
+
+      that.setCursor(that.endPos + strOffset);
     }
-
-    that.addUndoStep(value);
-
-    let newStr = selection.replace(/^(.*)$/gm, regex);
-    let newValue = value.substr(0, that.startPos) + extraEnter + newStr + value.substr(that.endPos, value.length);
-    let newCursorPos = that.startPos + extraEnter.length + newStr.length;
-    let strOffset = extraEnter.length + newStr.length - that.selection.length;
-
-    that.selection = '';
-    this.args.onChange(newValue);
-    that.newCursorPos = newCursorPos;
-
-    that.setCursor(that.endPos + strOffset);
   }
 
   /*
@@ -404,12 +414,12 @@ export default class MarkdownEditorComponent extends Component {
     let that = this;
     let ctrl = document.getElementById(that.textareaId);
 
-    if(ctrl.setSelectionRange) {
+    if (ctrl.setSelectionRange) {
       ctrl.focus();
-      next(that, function() {
+      next(that, function () {
         ctrl.setSelectionRange(pos, pos);
       });
-    } else if(ctrl.createTextRange) {
+    } else if (ctrl.createTextRange) {
       let range = ctrl.createTextRange();
       range.collapse(true);
       range.moveEnd('character', pos);
@@ -443,24 +453,26 @@ export default class MarkdownEditorComponent extends Component {
    * Reverts the value to a previous value based on the undo array.
    */
   @action undo() {
-    let that = this;
-    let undoHistory = that.undoHistory.toArray();
+    if (this.args.onChange) {
+      let that = this;
+      let undoHistory = that.undoHistory.toArray();
 
-    if(undoHistory.length === 0){
-      alert('No more steps to undo.');
-      return false;
+      if (undoHistory.length === 0) {
+        alert('No more steps to undo.');
+        return false;
+      }
+
+      var restoreValue = undoHistory.pop();
+
+      that.undoHistory = A(undoHistory);
+      // that.updateValue();
+      this.args.onChange(restoreValue);
     }
-
-    var restoreValue = undoHistory.pop();
-
-    that.undoHistory = A(undoHistory);
-    // that.updateValue();
-    this.args.onChange(restoreValue);
   }
-  
-  @action onChange(value){
-    let newValue = this.args.value;
-    if(this.args.onChange){
+
+  @action onChange() {
+    if (this.args.onChange) {
+      let newValue = this.args.value;
       this.args.onChange(newValue);
     }
   }
